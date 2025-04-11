@@ -2,12 +2,14 @@ package com.simonmorgan.snacksmpcserver.dao;
 
 import com.simonmorgan.snacksmpcserver.model.SnackItems;
 import com.simonmorgan.snacksmpcserver.model.Snacks;
+import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.reactive.function.client.WebClientResponseException;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Component
 public class SnacksDAO {
 
     private static final String BASE_URL = "https://nc-snacks-snwj.onrender.com/api/";
