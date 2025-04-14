@@ -1,6 +1,5 @@
 package com.simonmorgan.snacksmpcserver;
 
-import com.simonmorgan.snacksmpcserver.dao.SnacksDAO;
 import com.simonmorgan.snacksmpcserver.service.SnacksService;
 import org.springframework.ai.tool.ToolCallback;
 import org.springframework.ai.tool.ToolCallbacks;
@@ -21,5 +20,4 @@ public class SnacksmpcserverApplication {
 	public List<ToolCallback> snacksTool(SnacksService snacksService) {
 		return List.of(ToolCallbacks.from(snacksService));
 	}
-
 }
