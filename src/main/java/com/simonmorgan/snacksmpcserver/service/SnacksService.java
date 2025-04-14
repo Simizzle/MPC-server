@@ -1,6 +1,7 @@
 package com.simonmorgan.snacksmpcserver.service;
 
 import com.simonmorgan.snacksmpcserver.dao.SnacksDAO;
+import com.simonmorgan.snacksmpcserver.model.SnackDto;
 import com.simonmorgan.snacksmpcserver.model.Snacks;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,4 +22,8 @@ public class SnacksService {
     }
 
 
+    @Tool(name = "add_snack_to_database", description = "Post a snack to the nc_snack api")
+    public void addSnack(String snack_name, String snack_description, int price_in_pence, int category_id) {
+        SnacksDAO.postSnack(new SnackDto(snack_name, snack_description, price_in_pence, category_id));
+    }
 }
