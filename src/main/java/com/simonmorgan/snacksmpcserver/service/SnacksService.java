@@ -2,6 +2,7 @@ package com.simonmorgan.snacksmpcserver.service;
 
 import com.simonmorgan.snacksmpcserver.dao.SnacksDAO;
 import com.simonmorgan.snacksmpcserver.model.SnackDto;
+import com.simonmorgan.snacksmpcserver.model.SnackItems;
 import com.simonmorgan.snacksmpcserver.model.Snacks;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,14 +14,28 @@ public class SnacksService {
 
     private static final Logger log = LoggerFactory.getLogger(SnacksService.class);
 
-    @Tool(name = "get_all_snacks", description = "Get a list of snacks from the nc_snacks api")
+    @Tool(name = "get_all_snacks", description = "Get a list of snacks from the snacks api")
     public Snacks getSnacks() {
-        return SnacksDAO.getSnacks("snacks");
+        Snacks snacks = SnacksDAO.getSnacks("snacks");
+        log.info(String.valueOf(snacks));
+        return snacks;
     }
 
 
-    @Tool(name = "add_snack_to_database", description = "Post a snack to the nc_snack api")
-    public void addSnack(String snack_name, String snack_description, int price_in_pence, int category_id) {
-        SnacksDAO.postSnack(new SnackDto(snack_name, snack_description, price_in_pence, category_id));
+    @Tool(name = "add_snack_to_database", description = "Post a snack to the snack api")
+    public void addSnack(SnackDto snack) {
+        SnackItems newSnack = SnacksDAO.postSnack(snack);
+        log.info(String.valueOf(newSnack));
+    }
+
+    @Tool(name = "update_snack_in_database_by_id", description = "Update a snack in the snack api by id using a PUT request")
+    public void putSnack(Long snackId, SnackDto snack) {
+        SnackItems updatedSnack = SnacksDAO.putSnack(snackId, snack);
+        log.info(String.valueOf(updatedSnack));
+    }
+
+    @Tool(name = "delete_snack_in_database_by_id", description = "Update a snack in the snack api by id using a DELETE request")
+    public void deleteSnack(Long snackId) {
+        SnacksDAO.deleteSnack(snackId);
     }
 }

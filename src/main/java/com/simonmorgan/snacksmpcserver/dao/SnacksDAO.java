@@ -10,7 +10,7 @@ import reactor.core.publisher.Mono;
 
 @Component
 public class SnacksDAO {
-    private static final String BASE_URL = "https://nc-snacks-snwj.onrender.com/api/";
+    private static final String BASE_URL = "https://snacks-api-nzwy.onrender.com/api/";
     private static final WebClient WEB_CLIENT = WebClient.builder().baseUrl(BASE_URL).build();
 
     public static Snacks getSnacks(String endpoint) {
@@ -26,6 +26,7 @@ public class SnacksDAO {
         } catch (WebClientResponseException e) {
             System.out.println(e.getMessage());
         }
+        System.out.println(snacks);
         return snacks;
     }
 
@@ -33,12 +34,34 @@ public class SnacksDAO {
         SnackItems snack = null;
         snack = WEB_CLIENT
                 .post()
-                .uri("/snacks")
+                .uri("snacks")
                 .body(Mono.just(snackDto), SnackDto.class)
                 .retrieve()
                 .bodyToMono(SnackItems.class)
                 .block();
 
         return snack;
+    }
+
+    public static SnackItems putSnack(Long snackId, SnackDto snackDto) {
+        SnackItems snack = null;
+        snack = WEB_CLIENT
+                .put()
+                .uri(BASE_URL + "snacks/" + snackId)
+                .body(Mono.just(snackDto), SnackDto.class)
+                .retrieve()
+                .bodyToMono(SnackItems.class)
+                .block();
+
+        return snack;
+    }
+
+    public static String deleteSnack(Long snackId) {
+        return WEB_CLIENT
+                .delete()
+                .uri(BASE_URL + "snacks/" + snackId)
+                .retrieve()
+                .bodyToMono(String.class)
+                .block();
     }
 }
