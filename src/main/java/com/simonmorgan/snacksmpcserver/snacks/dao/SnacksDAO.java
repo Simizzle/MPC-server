@@ -1,8 +1,10 @@
-package com.simonmorgan.snacksmpcserver.dao;
+package com.simonmorgan.snacksmpcserver.snacks.dao;
 
-import com.simonmorgan.snacksmpcserver.model.SnackDto;
-import com.simonmorgan.snacksmpcserver.model.SnackItems;
-import com.simonmorgan.snacksmpcserver.model.Snacks;
+import com.simonmorgan.snacksmpcserver.snacks.model.SnackDto;
+import com.simonmorgan.snacksmpcserver.snacks.model.SnackItems;
+import com.simonmorgan.snacksmpcserver.snacks.model.Snacks;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.reactive.function.client.WebClientResponseException;
@@ -10,6 +12,8 @@ import reactor.core.publisher.Mono;
 
 @Component
 public class SnacksDAO {
+
+    private static final Logger log = LoggerFactory.getLogger(SnacksDAO.class);
     private static final String BASE_URL = "https://snacks-api-nzwy.onrender.com/api/";
     private static final WebClient WEB_CLIENT = WebClient.builder().baseUrl(BASE_URL).build();
 
@@ -24,9 +28,8 @@ public class SnacksDAO {
                     .bodyToMono(Snacks.class)
                     .block();
         } catch (WebClientResponseException e) {
-            System.out.println(e.getMessage());
+            log.error(e.getMessage());
         }
-        System.out.println(snacks);
         return snacks;
     }
 

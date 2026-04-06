@@ -1,4 +1,4 @@
-package com.simonmorgan.snacksmpcserver.model;
+package com.simonmorgan.snacksmpcserver.snacks.model;
 
 import java.util.List;
 
